@@ -54,6 +54,7 @@ app.post("/register",upload.single('profileImg'),( req, res ) => {
         return res.status(400).json("incorrect form submission")
     }
     const image = valid ? req.file.path : ""
+    console.loh(req.file)
     const hash =  bcrypt.hashSync(password, 10)
     db.transaction((trx) => {
         trx.insert({ email:email, password:hash })
