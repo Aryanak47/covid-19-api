@@ -19,7 +19,7 @@ const db = require('knex')({
 let valid = false
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '/uploads/'));
+        cb(null, './uploads')
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
@@ -35,15 +35,17 @@ function fileFilter (req, file, cb) {
         cb(null, false)
     }
 }
+app.use(bodyParser.json())
+app.use("/uploads",express.static('./uploads'))
+app.use(cors())
 const upload = multer({
-   storage
+   storage,
+   fileFilter
 })
 
-// var upload = multer({ dest: './uploads' })
 
-app.use(bodyParser.json())
-app.use(express.static(__dirname));
-app.use(cors())
+
+
 
 
 app.get("/" ,(req,res)=>{
