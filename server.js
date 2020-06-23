@@ -113,8 +113,9 @@ app.get("/profile/:id", ( req, res ) => {
     .catch(er => res.status(400).json("Error getting user"))
 })
 
-app.listen(3000,()=>{
-    console.log("Listening to port 3000 ")
+const PORT = process.env.PORT
+app.listen(PORT || 3000,()=>{
+    console.log(`Listening to port ${PORT}`)
 })
 
 
