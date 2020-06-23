@@ -34,12 +34,11 @@ function fileFilter (req, file, cb) {
         cb(null, false)
     }
 }
-// const upload = multer({
-//    storage,
-//    fileFilter
-// })
+const upload = multer({
+   storage
+})
 
-var upload = multer({ dest: './uploads' })
+// var upload = multer({ dest: './uploads' })
 
 app.use(bodyParser.json())
 app.use("/uploads",express.static('./uploads'))
