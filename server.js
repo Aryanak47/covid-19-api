@@ -5,6 +5,7 @@ const app = express()
 const multer  = require('multer')
 const bcrypt = require('bcrypt')
 const cors = require("cors")
+const path = require('path')
 const db = require('knex')({
     client: 'pg',
     connection: {
@@ -18,7 +19,7 @@ const db = require('knex')({
 let valid = false
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/')
+        cb(null, path.join(__dirname, '/uploads/'));
     },
     filename: function (req, file, cb) {
       cb(null, file.originalname)
@@ -41,7 +42,7 @@ const upload = multer({
 // var upload = multer({ dest: './uploads' })
 
 app.use(bodyParser.json())
-app.use("/uploads",express.static('./uploads'))
+app.use(express.static(__dirname));
 app.use(cors())
 
 
