@@ -8,10 +8,11 @@ const cors = require("cors")
 const db = require('knex')({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
-      user : 'aryan',
-      password : 'rn47',
-      database : 'covid'
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+    
     }
 });
 let valid = false
