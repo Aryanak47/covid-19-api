@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads')
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() +  file.originalname)
+      cb(null, file.originalname)
     }
 })
 function fileFilter (req, file, cb) {
@@ -34,10 +34,12 @@ function fileFilter (req, file, cb) {
         cb(null, false)
     }
 }
-const upload = multer({
-   storage,
+// const upload = multer({
+//    storage,
 //    fileFilter
-})
+// })
+
+var upload = multer({ dest: './uploads' })
 
 app.use(bodyParser.json())
 app.use("/uploads",express.static('./uploads'))
