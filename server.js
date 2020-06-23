@@ -44,8 +44,7 @@ app.use(cors())
 
 
 app.get("/" ,(req,res)=>{
-    db("userinfo").select("*")
-    .then(data => res.json(data))
+     res.json("Home")
 }) 
 
 app.post("/register",upload.single('profileImg'),( req, res ) => {
@@ -115,7 +114,7 @@ app.get("/profile/:id", ( req, res ) => {
 
 const PORT = process.env.PORT
 app.listen(PORT || 3000,()=>{
-    console.log(`Listening to port ${PORT}`)
+    console.log(`I'm Listening to port ${PORT}`)
 })
 
 
