@@ -35,6 +35,8 @@ function fileFilter (req, file, cb) {
         cb(null, false)
     }
 }
+
+// Middleware 
 app.use(bodyParser.json())
 app.use("/uploads",express.static('./uploads'))
 app.use(cors())
@@ -43,19 +45,14 @@ const upload = multer({
    fileFilter
 })
 
-
-
-
-
-
+// handlers
 app.get("/" ,(req,res)=>{
      res.json("Home")
 }) 
-
 app.post("/register",upload.single('profileImg'),( req, res ) => {
     const { name, email, password } = req.body
     if (!email && !password && !name ){
-        return res.status(400).json("incorrect form submission")
+        return res.status(404).json("incorrect form submission")
     }
     const image = valid ? req.file.path : ""
     const hash =  bcrypt.hashSync(password, 10)
@@ -83,7 +80,6 @@ app.post("/register",upload.single('profileImg'),( req, res ) => {
     .catch(err=>res.status(400).json("Unable to register"))
   
 })
-
 app.post("/signin",( req,res ) => {
     const { password , email } = req.body
     db.select("*").from("login").where( { email:email }) 
@@ -103,7 +99,6 @@ app.post("/signin",( req,res ) => {
     }) 
     .catch(er => res.status(400).json("Wrong credentials"))
 })
-
 app.get("/profile/:id", ( req, res ) => {
     const { id } = req.params
     db.select("*").from("userinfo").where( { id:id } )
@@ -117,6 +112,7 @@ app.get("/profile/:id", ( req, res ) => {
     .catch(er => res.status(400).json("Error getting user"))
 })
 
+// listening to port
 const { PORT } = process.env
 app.listen(PORT || 3000,()=>{
     console.log(`I'm Listening to port ${PORT}`)
